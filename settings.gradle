@@ -1,0 +1,5 @@
+include ':Ms-BI',
+		':Ms-Clientes',
+		':Ms-Compras',
+		':Ms-Facturacion',
+		':Ms-SAP'
