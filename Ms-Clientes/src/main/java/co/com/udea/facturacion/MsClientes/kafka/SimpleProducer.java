@@ -1,4 +1,4 @@
-package co.com.udea.facturacion.msfacturacion.kafka;
+package co.com.udea.facturacion.MsClientes.kafka;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,11 +1,13 @@
 package co.com.udea.facturacion.msfacturacion.controller;
 
 import co.com.udea.facturacion.msfacturacion.modelo.Factura;
+import co.com.udea.facturacion.msfacturacion.modelo.PersistenciaException;
 import co.com.udea.facturacion.msfacturacion.rabbit.Publicador;
 import co.com.udea.facturacion.msfacturacion.rabbit.RabbitConf;
 import co.com.udea.facturacion.msfacturacion.repositorio.FacturaRepositorio;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.FacturaEntities;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.UtilMapper;
+import co.com.udea.facturacion.msfacturacion.servicio.ServicioFacturacion;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,21 +27,19 @@ public class FacturacionController {
     Gson gson = new Gson();
 
     @Autowired
-    Publicador publicador;
+    ServicioFacturacion servicioFacturacion;
 
     @Autowired
     FacturaRepositorio facturaRepositorio;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/regalo")
-    public ResponseEntity<Long> crearRegalo(@RequestBody Factura factura){
-        FacturaEntities save = facturaRepositorio.save(UtilMapper.getFacturaEntity(factura));
-
-        ResponseEntity respuesta = null;
-        if(save!=null){
-            publicador.publicarMensajeSap(RabbitConf.EXCHANGE_FACTURASRECIBIDA,gson.toJson(save));
-            respuesta = new ResponseEntity<Long>(save.getIdFactura(), HttpStatus.ACCEPTED);
-        }else{
-            respuesta = new ResponseEntity<Long>(save.getIdFactura(), HttpStatus.INTERNAL_SERVER_ERROR);
+    @RequestMapping(method = RequestMethod.POST, value = "/factura")
+    public ResponseEntity<Object> crearFactura(@RequestBody Factura factura){
+        ResponseEntity<Object> respuesta = null;
+        try{
+            Long idFactura = servicioFacturacion.crearFactura(factura);
+            respuesta = new ResponseEntity<Object>(idFactura, HttpStatus.ACCEPTED);
+        }catch (PersistenciaException e){
+            respuesta = new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return respuesta;

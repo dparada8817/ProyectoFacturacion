@@ -13,10 +13,14 @@ public class Publicador {
     ApplicationContext cxt = new AnnotationConfigApplicationContext(RabbitConf.class);
     RabbitTemplate template = cxt.getBean(RabbitTemplate.class);
 
-    public void publicarMensajeSap(String exchange, String mensaje){
+    public void publicarMensaje(String exchange, String mensaje){
+        publicarMensaje(exchange, null,mensaje);
+    }
+
+    public void publicarMensaje(String exchange,String routingKey, String mensaje){
         CompletableFuture.runAsync(()->{
-            System.out.println(exchange + " "+mensaje);
-            template.convertAndSend(exchange,"",mensaje);
+            System.out.println(exchange + " "+routingKey + " "+mensaje);
+            template.convertAndSend(exchange,routingKey,mensaje);
         });
     }
 }

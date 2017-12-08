@@ -17,6 +17,7 @@ public class RabbitConf {
     public static final String PASSWORD = "JhFeJ_eTqOt7gsf40d5gVr3RN5yw5ot2";
 
     public static String EXCHANGE_FACTURASRECIBIDA = "udea.facturacion.facturarecibida";
+    public static String ROUTINGKEY_CLIENTES = "clienterecibido";
     public static String EXCHANGE_CLIENTES = "udea.facturacion.cliente";
     public static final String COLA_FACTURA_PROCESADA = "udea.facturacion.factura.facturaprocesada";
 
