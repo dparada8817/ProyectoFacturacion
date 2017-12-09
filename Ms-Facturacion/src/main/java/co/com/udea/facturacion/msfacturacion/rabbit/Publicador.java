@@ -1,5 +1,7 @@
 package co.com.udea.facturacion.msfacturacion.rabbit;
 
+import co.com.udea.facturacion.msfacturacion.rabbit.conf.RabbitConf;
+import co.com.udea.facturacion.msfacturacion.rabbit.conf.RabbitPublicadorConf;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -10,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class Publicador {
 
-    ApplicationContext cxt = new AnnotationConfigApplicationContext(RabbitConf.class);
+    ApplicationContext cxt = new AnnotationConfigApplicationContext(RabbitPublicadorConf.class);
     RabbitTemplate template = cxt.getBean(RabbitTemplate.class);
 
     public void publicarMensaje(String exchange, String mensaje){

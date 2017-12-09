@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Factura {
 
+    private Long idFactura;
     private String idSap;
     private Cliente cliente;
     private List<Item> producto;
@@ -20,6 +21,13 @@ public class Factura {
     public Factura() {
     }
 
+    public Long getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(Long idFactura) {
+        this.idFactura = idFactura;
+    }
 
     public String getIdSap() {
         return idSap;

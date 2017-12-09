@@ -3,7 +3,7 @@ package co.com.udea.facturacion.msfacturacion.servicio;
 import co.com.udea.facturacion.msfacturacion.modelo.Factura;
 import co.com.udea.facturacion.msfacturacion.modelo.PersistenciaException;
 import co.com.udea.facturacion.msfacturacion.rabbit.Publicador;
-import co.com.udea.facturacion.msfacturacion.rabbit.RabbitConf;
+import co.com.udea.facturacion.msfacturacion.rabbit.conf.RabbitConf;
 import co.com.udea.facturacion.msfacturacion.repositorio.FacturaRepositorio;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.FacturaEntities;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.UtilMapper;
@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created by DavidAlexander on 08/12/2017.
@@ -48,5 +50,8 @@ public class ServicioFacturacion {
     }
 
 
-
+    public List<Factura> getFacturas() {
+        List<FacturaEntities> facturaEntities = facturaRepositorio.findAll();
+        return UtilMapper.getFacturaFromEntity(facturaEntities);
+    }
 }
