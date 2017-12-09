@@ -1,6 +1,7 @@
-package co.com.udea.facturacion.clientes.rabbit;
+package co.com.udea.facturacion.clientes.rabbit.conf;
 
 
+import co.com.udea.facturacion.clientes.rabbit.Consumidor;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,8 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConf {
 
-    @Autowired
-    Consumidor consumidor;
+
 
     public static final String LOCALHOST = "spider.rmq.cloudamqp.com";
     public static final String USER_UDEA = "fahnijad";
@@ -22,6 +22,7 @@ public class RabbitConf {
 
     public static String EXCHANGE_FACTURASRECIBIDA = "udea.facturacion.facturarecibida";
     public static String ROUTINGKEY_CLIENTES = "clienterecibido";
+    public static String ROUTINGKEY_CLIENTESCREADO = "clientecreado";
     public static String EXCHANGE_CLIENTES = "udea.facturacion.cliente";
     public static final String COLA_CLIENTE_RECIBIDO = "udea.facturacion.cliente.clienterecibido";
 
@@ -36,20 +37,7 @@ public class RabbitConf {
         return cachingConnectionFactory;
     }
 
-    @Bean
-    public RabbitTemplate rabbitTemplate(){
-        RabbitTemplate template = new RabbitTemplate(getConnectionFactory());
-        return template;
-    }
 
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory){
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setMessageListener(consumidor);
-        container.setQueueNames(COLA_CLIENTE_RECIBIDO);
-        container.setAcknowledgeMode(AcknowledgeMode.AUTO);
-        return container;
-    }
+
 
 }
