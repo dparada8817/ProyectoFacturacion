@@ -1,0 +1,43 @@
+package co.com.udea.facturacion.msbi.rabbit.conf;
+
+import co.com.udea.facturacion.msbi.rabbit.ConsumidorFactura;
+import org.springframework.amqp.core.AcknowledgeMode;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+@Configuration
+public class RabbitFacturaConf {
+
+  public static final String LOCALHOST = "spider.rmq.cloudamqp.com";
+  public static final String USER_UDEA = "fahnijad";
+  public static final String PASSWORD = "JhFeJ_eTqOt7gsf40d5gVr3RN5yw5ot2";
+
+  public static final String COLA_FACTURA_PROCESADA = "udea.facturacion.bi.facturaprocesada";
+
+  @Bean
+  public ConnectionFactory connectionFactory(){
+
+    CachingConnectionFactory connectionFactory = new CachingConnectionFactory(LOCALHOST);
+    connectionFactory.setUsername(USER_UDEA);
+    connectionFactory.setPassword(PASSWORD);
+    connectionFactory.setVirtualHost(USER_UDEA);
+    connectionFactory.setChannelCheckoutTimeout(10000);
+    connectionFactory.setRequestedHeartBeat(30);
+    return connectionFactory;
+  }
+
+  @Bean
+  public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory) {
+    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+    container.setConnectionFactory(connectionFactory);
+    container.setQueueNames(COLA_FACTURA_PROCESADA);
+    container.setMessageListener(new ConsumidorFactura());
+    container.setAcknowledgeMode(AcknowledgeMode.AUTO);
+    return container;
+  }
+
+}

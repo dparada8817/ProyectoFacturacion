@@ -78,9 +78,11 @@ Es el componente que se encarga de asentar las facturas y generar el evento para
 
 
 #### Ms-BI
+El componente de BI se alimenta de las facturas asentadas en en el componente de SAP para su tratamiento interno
 
 #### Ms-Compras
-
+Este componente maneja se propia base de datos de clientes y recibe la información desde el componente de clientes para su gestion
+También recibe informacion de las facturas asentadas desde sap para su tratamiento
 
 ## Como correr el proyecto
 
