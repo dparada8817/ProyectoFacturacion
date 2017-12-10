@@ -31,7 +31,12 @@ Es el componente actua como proxy reverso para ser el unico punto de entrada de 
  
 #### eureka-server
 Es el componente actua como servidor de registry donde los servicios se autoregistran al momento de levantar y donde el proxy reverso viene a preguntar la localizacion de los componentes para redireccionar las peticiones
-
+- Rutas expuestas
+    
+    rutas en la cual se ven los servicios registra atraves del proxy o directamente en el servidor 
+    - http://localhost:1111/proyecto-facturacion/eurekaserver/
+    - http://localhost:1112/
+    
 
 #### Ms-Facturacion
 Es el componente que se encarga de manejar la facturacion del sistema, tiene como funciones persistir las facturas, comunicarse con el componente  sap para este registre la factura y con el componente clientes para crear/actualizar el cliente.
