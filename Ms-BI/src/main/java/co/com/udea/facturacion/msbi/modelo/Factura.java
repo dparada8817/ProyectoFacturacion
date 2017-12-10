@@ -1,7 +1,11 @@
 package co.com.udea.facturacion.msbi.modelo;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+
+@Entity
 public class Factura {
-
+    @Id
     private Long idFactura;
     private String idSap;
     private String dniCliente;

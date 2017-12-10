@@ -1,7 +1,12 @@
 package co.com.udea.compras.modelo;
 
-public class Factura {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+
+@Entity
+public class Factura {
+    @Id
     private Long idFactura;
     private String idSap;
     private String dniCliente;
