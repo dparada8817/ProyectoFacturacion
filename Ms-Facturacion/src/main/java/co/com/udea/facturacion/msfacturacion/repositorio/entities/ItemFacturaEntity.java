@@ -19,6 +19,7 @@ public class ItemFacturaEntity {
     private Long idItem;
 
     private Long idFactura;
+    private String producto;
     private int cantidad;
 
     public ItemFacturaEntity() {
@@ -46,5 +47,13 @@ public class ItemFacturaEntity {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 }

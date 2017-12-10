@@ -5,7 +5,9 @@ import co.com.udea.facturacion.msfacturacion.modelo.PersistenciaException;
 import co.com.udea.facturacion.msfacturacion.rabbit.Publicador;
 import co.com.udea.facturacion.msfacturacion.rabbit.conf.RabbitConf;
 import co.com.udea.facturacion.msfacturacion.repositorio.FacturaRepositorio;
+import co.com.udea.facturacion.msfacturacion.repositorio.ItemFacturaRepositorio;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.FacturaEntities;
+import co.com.udea.facturacion.msfacturacion.repositorio.entities.ItemFacturaEntity;
 import co.com.udea.facturacion.msfacturacion.repositorio.entities.UtilMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,12 @@ public class ServicioFacturacion {
     @Autowired
     FacturaRepositorio facturaRepositorio;
 
+    @Autowired
+    ItemFacturaRepositorio itemFacturaRepositorio;
 
-    public Long crearFactura(Factura factura) throws PersistenciaException {
-        FacturaEntities save = crearActualizarFactura(UtilMapper.getFacturaEntity(factura));
+
+    public FacturaEntities crearFactura(Factura factura) throws PersistenciaException {
+        FacturaEntities save = crearActualizarFactura(factura);
 
         ResponseEntity respuesta = null;
         if(save!=null){
@@ -41,17 +46,29 @@ public class ServicioFacturacion {
           throw new PersistenciaException("Error al guardar la Factura");
         }
 
-        return save.getIdFactura();
+        return save;
+    }
+
+    private void saveItemsXfactura(Factura factura) {
+
+        itemFacturaRepositorio.save(UtilMapper.getItemFacturaEntity(factura));
     }
 
 
-    public FacturaEntities crearActualizarFactura( FacturaEntities save){
+    public FacturaEntities crearActualizarFactura( Factura factura){
+        FacturaEntities save =crearActualizarFactura(UtilMapper.getFacturaEntity(factura));
+        factura.setIdFactura(save.getIdFactura());
+        saveItemsXfactura(factura);
+        return save;
+    }
+
+    public FacturaEntities crearActualizarFactura( FacturaEntities save) {
         return facturaRepositorio.save(save);
     }
 
-
     public List<Factura> getFacturas() {
         List<FacturaEntities> facturaEntities = facturaRepositorio.findAll();
-        return UtilMapper.getFacturaFromEntity(facturaEntities);
+        List<ItemFacturaEntity> all = itemFacturaRepositorio.findAll();
+        return UtilMapper.getFacturaFromEntity(facturaEntities,all);
     }
 }

@@ -2,6 +2,7 @@ package co.com.udea.facturacion.msfacturacion.controller;
 
 import co.com.udea.facturacion.msfacturacion.modelo.Factura;
 import co.com.udea.facturacion.msfacturacion.modelo.PersistenciaException;
+import co.com.udea.facturacion.msfacturacion.repositorio.entities.FacturaEntities;
 import co.com.udea.facturacion.msfacturacion.servicio.ServicioFacturacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class FacturacionController {
     public ResponseEntity<Object> crearFactura(@RequestBody Factura factura){
         ResponseEntity<Object> respuesta = null;
         try{
-            Long idFactura = servicioFacturacion.crearFactura(factura);
+            FacturaEntities idFactura = servicioFacturacion.crearFactura(factura);
             respuesta = new ResponseEntity<Object>(idFactura, HttpStatus.ACCEPTED);
         }catch (PersistenciaException e){
             respuesta = new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
