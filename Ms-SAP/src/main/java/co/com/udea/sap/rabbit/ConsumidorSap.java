@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 public class ConsumidorSap implements MessageListener {
 
 
-    //@Autowired
-    SapService sapService = new SapService();
+    @Autowired
+    SapService sapService;
 
     Gson gson = new Gson();
 

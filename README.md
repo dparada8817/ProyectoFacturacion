@@ -64,7 +64,7 @@ Es el componente que se encarga de manejar la facturacion del sistema, tiene com
 Es el componente que se encarga de ofrecer un manejo centralizado de los clientes. recibe la informacion de los clientes desde el componente de facturacion para su gestion
 - Rutas expuetas
     - http://localhost:1111/proyecto-facturacion/msclientes/clientes se encarga de listar todos los clientes creados
-     - http://localhost:1117/h2 : ruta para acceder al servidor de db del ms, los datos de ingreso son: 
+    - http://localhost:1117/h2 : ruta para acceder al servidor de db del ms, los datos de ingreso son: 
         
                 JDBC URL: jdbc:h2:file:~/cliente 
                 Usuario: cliente 
@@ -75,6 +75,13 @@ Es el componente que se encarga de ofrecer un manejo centralizado de los cliente
 #### Ms-Sap
 
 Es el componente que se encarga de asentar las facturas y generar el evento para que los demas sistemas hagan con esta su tarea necesaria
+- Rutas expuestas
+    - http://localhost:1111/proyecto-facturacion/mssap/facturas retorna las facturas asentadas en el sistema de sap
+    - http://localhost:1114/h2 : ruta para acceder al servidor de db del ms, los datos de ingreso son: 
+            
+                    JDBC URL: jdbc:h2:file:~/sap 
+                    Usuario: sap 
+                    sin contraseña
 
 
 #### Ms-BI

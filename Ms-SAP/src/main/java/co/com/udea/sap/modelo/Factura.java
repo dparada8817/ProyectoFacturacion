@@ -1,8 +1,14 @@
 package co.com.udea.sap.modelo;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Factura {
 
     private Long idFactura;
+    @Id
     private String idSap;
     private String dniCliente;
 

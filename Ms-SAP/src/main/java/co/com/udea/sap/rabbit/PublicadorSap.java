@@ -5,6 +5,7 @@ import co.com.udea.sap.rabbit.conf.RabbitPublicadorConf;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,4 +26,5 @@ public class PublicadorSap {
             template.convertAndSend(exchange,routingKey,mensaje);
         });
     }
+
 }
